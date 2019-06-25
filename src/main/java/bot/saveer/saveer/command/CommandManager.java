@@ -56,7 +56,11 @@ public class CommandManager {
   public CommandManager register(Command command) {
     List.of(command.getAliases()).forEach(alias -> {
       if (aliasCommands.containsKey(alias)) {
-        log.warn("Alias `{}` is already registered by `{}`.", alias, aliasCommands.get(alias).getClass().getName());
+        log.warn(
+            "Alias `{}` is already registered by `{}`.",
+            alias,
+            aliasCommands.get(alias).getClass().getName()
+        );
       } else {
         this.aliasCommands.put(alias, command);
         log.debug("Registered alias `{}` of command `{}`.", alias, command.getClass().getName());
@@ -77,7 +81,7 @@ public class CommandManager {
   /**
    * A map with all aliases of all {@link Command}s in relation with their {@link Command}.
    *
-   * @return The {@link Map<String, Command>} with aliases and commands.
+   * @return The {@link Map} with aliases and commands.
    */
   public Map<String, Command> getAliasCommands() {
     return this.aliasCommands;

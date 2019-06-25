@@ -32,6 +32,10 @@ public class CommandRegistry {
   private final Logger log = LoggerFactory.getLogger(getClass());
   private final CommandManager commandManager;
 
+  /**
+   * Creates a new {@link CommandRegistry}.
+   * @param commandManager The {@link CommandManager}.
+   */
   public CommandRegistry(CommandManager commandManager) {
     this.commandManager = commandManager;
     log.debug("Registering commands...");
@@ -46,6 +50,6 @@ public class CommandRegistry {
         .build();
 
     // Register actual commands
-    commandManager.register(new TestCommand().setCategory(ownerCategory));
+    commandManager.register(new TestCommand().setCommandCategory(ownerCategory));
   }
 }

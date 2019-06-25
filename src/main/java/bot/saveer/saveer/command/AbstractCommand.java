@@ -34,16 +34,21 @@ public abstract class AbstractCommand implements Command {
   private String usage = "";
   private String description = "No description provided.";
   private boolean ownerRestricted = false;
-  private CommandCategory category = null;
+  private CommandCategory commandCategory = null;
 
+  /**
+   * Creates a new {@link AbstractCommand}.
+   * @param displayName The display name of this command.
+   * @param aliases The aliases of this command.
+   */
   public AbstractCommand(String displayName, String[] aliases) {
     this.displayName = Objects.requireNonNull(displayName);
     this.aliases = Objects.requireNonNull(aliases);
     addBotPermissions(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE);
   }
 
-  public AbstractCommand setCategory(CommandCategory category) {
-    this.category = category;
+  public AbstractCommand setCommandCategory(CommandCategory category) {
+    this.commandCategory = category;
     return this;
   }
 
@@ -98,7 +103,7 @@ public abstract class AbstractCommand implements Command {
   }
 
   @Override
-  public Permission[] getUsePermissions() {
+  public Permission[] getUserPermissions() {
     return userPermissions.toArray(new Permission[0]);
   }
 
@@ -119,7 +124,7 @@ public abstract class AbstractCommand implements Command {
 
   @Override
   public CommandCategory getCommandCategory() {
-    return category;
+    return commandCategory;
   }
 
   @Override

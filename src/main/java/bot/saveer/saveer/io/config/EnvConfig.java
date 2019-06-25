@@ -19,18 +19,29 @@
 package bot.saveer.saveer.io.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import java.util.Objects;
 
 public class EnvConfig implements Config {
 
   private final String token;
+  private final String[] owners;
 
+  /**
+   * Creates a new {@link EnvConfig}.
+   */
   public EnvConfig() {
     var dotenv = Dotenv.load();
     this.token = dotenv.get("SAVEER_TOKEN");
+    this.owners = Objects.requireNonNull(dotenv.get("SAVEER_OWNERS")).split(";");
   }
 
   @Override
   public String getToken() {
     return this.token;
+  }
+
+  @Override
+  public String[] getOwners() {
+    return owners;
   }
 }

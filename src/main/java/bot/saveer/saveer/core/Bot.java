@@ -35,6 +35,10 @@ public class Bot implements Saveer {
   private final CommandManager commandManager;
   private ShardManager shardManager;
 
+  /**
+   * Creates a new bot.
+   * @param config The {@link Config}.
+   */
   public Bot(Config config) {
     this.config = config;
     this.commandManager = new CommandManager();

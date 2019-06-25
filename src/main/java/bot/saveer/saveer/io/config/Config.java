@@ -27,4 +27,6 @@ public interface Config {
    * @return The bot token.
    */
   String getToken();
+
+  String[] getOwners();
 }

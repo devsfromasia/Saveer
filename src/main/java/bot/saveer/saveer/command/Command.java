@@ -60,7 +60,7 @@ public interface Command {
   String getDescription();
 
   /**
-   * All commands that are representing further commands
+   * All commands that are representing further commands.
    * of this command: {@code [prefix]command subcommand <param>}
    *
    * @return The subcommands.
@@ -73,7 +73,7 @@ public interface Command {
    *
    * @return The required {@link Permission}s for the user.
    */
-  Permission[] getUsePermissions();
+  Permission[] getUserPermissions();
 
   /**
    * The {@link Permission} the bot requires to run this command.
