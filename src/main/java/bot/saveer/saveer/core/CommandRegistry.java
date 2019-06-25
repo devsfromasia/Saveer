@@ -18,7 +18,6 @@
 
 package bot.saveer.saveer.core;
 
-import bot.saveer.saveer.command.CommandManager;
 import bot.saveer.saveer.command.category.CommandCategoryBuilder;
 import bot.saveer.saveer.commands.Test2Command;
 import bot.saveer.saveer.commands.TestCommand;

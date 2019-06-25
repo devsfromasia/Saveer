@@ -16,26 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer.command.ctx;
+package bot.saveer.saveer.command.internal
 
-import bot.saveer.saveer.core.Saveer;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
+import bot.saveer.saveer.command.CommandCategory
+import bot.saveer.saveer.command.CommandPermissions
 
-public interface CommandContext {
-
-  /**
-   * The Saveer instance.
-   *
-   * @return The Saveer instance.
-   */
-  Saveer getSaveer();
-
-  String[] getArgs();
-
-  Message getMessage();
-
-  default TextChannel getTextChannel() {
-    return getMessage().getTextChannel();
-  }
-}
+internal class CommandCategoryImpl @JvmOverloads constructor(
+        override val name: String,
+        override val description: String = "No description provided.",
+        override val permissions: CommandPermissions
+) : CommandCategory

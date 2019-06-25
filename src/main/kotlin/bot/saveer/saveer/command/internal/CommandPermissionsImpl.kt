@@ -16,19 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer.io.config;
+package bot.saveer.saveer.command.internal
 
-public interface Config {
+import bot.saveer.saveer.command.CommandPermissions
+import net.dv8tion.jda.api.Permission
 
-  /**
-   * The Discord application token of the bot.
-   * <br>If no token has been set, this returns null.
-   *
-   * @return The bot token.
-   */
-  String getToken();
-
-  String getPrefix();
-
-  String[] getOwners();
-}
+internal class CommandPermissionsImpl @JvmOverloads constructor(
+        override val userPermissions: List<Permission> = emptyList(),
+        override val botPermissions: List<Permission> = listOf(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE),
+        override val ownerRestricted: Boolean = false
+) : CommandPermissions

@@ -18,7 +18,6 @@
 
 package bot.saveer.saveer.core;
 
-import bot.saveer.saveer.command.CommandManager;
 import bot.saveer.saveer.io.config.Config;
 import net.dv8tion.jda.api.sharding.ShardManager;
 

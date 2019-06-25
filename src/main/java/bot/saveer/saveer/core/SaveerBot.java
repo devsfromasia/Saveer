@@ -18,8 +18,6 @@
 
 package bot.saveer.saveer.core;
 
-import bot.saveer.saveer.command.CommandHandler;
-import bot.saveer.saveer.command.CommandManager;
 import bot.saveer.saveer.io.config.Config;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager;

@@ -18,7 +18,6 @@
 
 package bot.saveer.saveer.command;
 
-import bot.saveer.saveer.command.category.CommandCategory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

@@ -16,19 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer.io.config;
+package bot.saveer.saveer.command
 
-public interface Config {
+interface CommandCategory {
 
-  /**
-   * The Discord application token of the bot.
-   * <br>If no token has been set, this returns null.
-   *
-   * @return The bot token.
-   */
-  String getToken();
+    val name: String
 
-  String getPrefix();
+    val description: String
 
-  String[] getOwners();
+    val permissions: CommandPermissions
 }

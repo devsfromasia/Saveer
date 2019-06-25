@@ -19,7 +19,6 @@
 package bot.saveer.saveer.commands;
 
 import bot.saveer.saveer.command.AbstractCommand;
-import bot.saveer.saveer.command.ctx.CommandContext;
 
 public class TestCommand extends AbstractCommand {
 

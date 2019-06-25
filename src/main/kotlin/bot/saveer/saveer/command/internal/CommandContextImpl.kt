@@ -16,19 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer.io.config;
+package bot.saveer.saveer.command.internal
 
-public interface Config {
+import bot.saveer.saveer.command.CommandContext
+import bot.saveer.saveer.core.Saveer
+import net.dv8tion.jda.api.entities.Message
 
-  /**
-   * The Discord application token of the bot.
-   * <br>If no token has been set, this returns null.
-   *
-   * @return The bot token.
-   */
-  String getToken();
-
-  String getPrefix();
-
-  String[] getOwners();
-}
+internal class CommandContextImpl(
+        override val saveer: Saveer,
+        override val args: List<String>,
+        override val message: Message
+) : CommandContext
