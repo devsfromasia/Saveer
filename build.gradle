@@ -28,7 +28,7 @@ plugins {
 group 'bot.saveer'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 12
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
