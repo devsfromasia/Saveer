@@ -28,7 +28,7 @@ plugins {
 group 'bot.saveer'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 12
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -44,6 +44,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+pmd {
+    ruleSets = ["$rootProject.projectDir/config/pmd/ruleset.xml"]
+}
 
 tasks.withType(SpotBugsTask) {
     reports {

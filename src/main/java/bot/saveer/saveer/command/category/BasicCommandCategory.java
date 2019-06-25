@@ -42,7 +42,7 @@ public class BasicCommandCategory implements CommandCategory {
       boolean ownerRestricted) {
     this.name = name;
     this.description = description;
-    this.userPermissions = userPermissions;
+    this.userPermissions = userPermissions.clone();
     this.ownerRestricted = ownerRestricted;
   }
 
@@ -58,7 +58,7 @@ public class BasicCommandCategory implements CommandCategory {
 
   @Override
   public Permission[] getUserPermissions() {
-    return userPermissions;
+    return userPermissions.clone();
   }
 
   @Override

@@ -27,10 +27,17 @@ public class DefaultCommandContext implements CommandContext {
   private final String[] args;
   private final Message message;
 
-  public DefaultCommandContext(Saveer saveer, Message message, String[] args) {
+  /**
+   * Default implementation for {@link CommandContext}.
+   *
+   * @param saveer The {@link Saveer} instance.
+   * @param message The {@link Message}.
+   * @param args The command args.
+   */
+  public DefaultCommandContext(Saveer saveer, Message message, String... args) {
     this.saveer = saveer;
     this.message = message;
-    this.args = args;
+    this.args = args.clone();
   }
 
   @Override
@@ -40,7 +47,7 @@ public class DefaultCommandContext implements CommandContext {
 
   @Override
   public String[] getArgs() {
-    return args;
+    return args.clone();
   }
 
   @Override

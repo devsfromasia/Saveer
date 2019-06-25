@@ -33,31 +33,32 @@ public abstract class AbstractCommand implements Command {
   private final List<Permission> botPermissions = new ArrayList<>();
   private String usage = "";
   private String description = "No description provided.";
-  private boolean ownerRestricted = false;
-  private CommandCategory category = null;
+  private boolean ownerRestricted;
+  private CommandCategory commandCategory;
 
-  public AbstractCommand(String displayName, String[] aliases) {
+  /**
+   * Creates a new {@link AbstractCommand}.
+   *
+   * @param displayName The display name of this command.
+   * @param aliases The aliases of this command.
+   */
+  public AbstractCommand(final String displayName, final String... aliases) {
     this.displayName = Objects.requireNonNull(displayName);
-    this.aliases = Objects.requireNonNull(aliases);
+    this.aliases = Objects.requireNonNull(aliases).clone();
     addBotPermissions(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE);
   }
 
-  public AbstractCommand setCategory(CommandCategory category) {
-    this.category = category;
-    return this;
-  }
-
-  protected AbstractCommand addSubcommand(Command command) {
+  protected AbstractCommand addSubcommand(final Command command) {
     this.subcommands.add(Objects.requireNonNull(command));
     return this;
   }
 
-  protected AbstractCommand addUserPermissions(Permission... permissions) {
+  protected AbstractCommand addUserPermissions(final Permission... permissions) {
     this.userPermissions.addAll(List.of(permissions));
     return this;
   }
 
-  protected AbstractCommand addBotPermissions(Permission... permissions) {
+  protected AbstractCommand addBotPermissions(final Permission... permissions) {
     this.botPermissions.addAll(List.of(permissions));
     return this;
   }
@@ -69,7 +70,7 @@ public abstract class AbstractCommand implements Command {
 
   @Override
   public String[] getAliases() {
-    return aliases;
+    return aliases.clone();
   }
 
   @Override
@@ -77,9 +78,8 @@ public abstract class AbstractCommand implements Command {
     return usage;
   }
 
-  protected AbstractCommand setUsage(String usage) {
+  protected void setUsage(final String usage) {
     this.usage = Objects.requireNonNull(usage);
-    return this;
   }
 
   @Override
@@ -87,9 +87,8 @@ public abstract class AbstractCommand implements Command {
     return description;
   }
 
-  protected AbstractCommand setDescription(String description) {
+  protected void setDescription(final String description) {
     this.description = Objects.requireNonNull(description);
-    return this;
   }
 
   @Override
@@ -98,7 +97,7 @@ public abstract class AbstractCommand implements Command {
   }
 
   @Override
-  public Permission[] getUsePermissions() {
+  public Permission[] getUserPermissions() {
     return userPermissions.toArray(new Permission[0]);
   }
 
@@ -112,18 +111,16 @@ public abstract class AbstractCommand implements Command {
     return ownerRestricted;
   }
 
-  protected AbstractCommand setOwnerRestricted(boolean ownerRestricted) {
+  protected void setOwnerRestricted(final boolean ownerRestricted) {
     this.ownerRestricted = ownerRestricted;
-    return this;
   }
 
   @Override
   public CommandCategory getCommandCategory() {
-    return category;
+    return commandCategory;
   }
 
-  @Override
-  public void beforeExecute() {
-    // TODO Metrics
+  public void setCommandCategory(final CommandCategory category) {
+    this.commandCategory = category;
   }
 }
