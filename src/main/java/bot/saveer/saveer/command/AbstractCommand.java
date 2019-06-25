@@ -43,7 +43,7 @@ public abstract class AbstractCommand implements Command {
    */
   public AbstractCommand(String displayName, String[] aliases) {
     this.displayName = Objects.requireNonNull(displayName);
-    this.aliases = Objects.requireNonNull(aliases);
+    this.aliases = Objects.requireNonNull(aliases).clone();
     addBotPermissions(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE);
   }
 
@@ -74,7 +74,7 @@ public abstract class AbstractCommand implements Command {
 
   @Override
   public String[] getAliases() {
-    return aliases;
+    return aliases.clone();
   }
 
   @Override

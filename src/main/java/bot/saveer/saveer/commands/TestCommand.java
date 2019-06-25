@@ -33,7 +33,7 @@ public class TestCommand extends AbstractCommand {
     ctx.getTextChannel().sendMessage("test reply").queue();
   }
 
-  class TestSubCommand extends AbstractCommand {
+  static class TestSubCommand extends AbstractCommand {
 
     public TestSubCommand() {
       super("Subcommand", new String[] {"subcommand"});

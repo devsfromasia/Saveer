@@ -36,7 +36,7 @@ public class DefaultCommandContext implements CommandContext {
   public DefaultCommandContext(Saveer saveer, Message message, String[] args) {
     this.saveer = saveer;
     this.message = message;
-    this.args = args;
+    this.args = args.clone();
   }
 
   @Override
@@ -46,7 +46,7 @@ public class DefaultCommandContext implements CommandContext {
 
   @Override
   public String[] getArgs() {
-    return args;
+    return args.clone();
   }
 
   @Override

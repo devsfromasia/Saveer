@@ -19,7 +19,7 @@
 package bot.saveer.saveer.io.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import java.util.Objects;
+import java.util.Optional;
 
 public class EnvConfig implements Config {
 
@@ -32,7 +32,7 @@ public class EnvConfig implements Config {
   public EnvConfig() {
     var dotenv = Dotenv.load();
     this.token = dotenv.get("SAVEER_TOKEN");
-    this.owners = Objects.requireNonNull(dotenv.get("SAVEER_OWNERS")).split(";");
+    this.owners = Optional.ofNullable(dotenv.get("SAVEER_OWNERS")).orElse("").split(";");
   }
 
   @Override
@@ -42,6 +42,6 @@ public class EnvConfig implements Config {
 
   @Override
   public String[] getOwners() {
-    return owners;
+    return owners.clone();
   }
 }
