@@ -38,7 +38,7 @@ public class CommandHandler {
   private final Saveer saveer;
   private final CommandManager commandManager;
 
-  public CommandHandler(Saveer saveer, CommandManager commandManager) {
+  public CommandHandler(final Saveer saveer, final CommandManager commandManager) {
     this.saveer = saveer;
     this.commandManager = commandManager;
   }
@@ -50,12 +50,12 @@ public class CommandHandler {
    * @param event The {@link MessageReceivedEvent}.
    */
   @SubscribeEvent
-  public void handleMessage(MessageReceivedEvent event) {
+  public void handleMessage(final MessageReceivedEvent event) {
     // Exclude bots and webhooks
     if (event.getAuthor().isBot() || event.getAuthor().isFake()) {
       return;
     }
-    var content = event.getMessage().getContentRaw();
+    final var content = event.getMessage().getContentRaw();
     // Message does not start with prefix
     if (
         !content.startsWith(DEFAULT_PREFIX)
@@ -64,7 +64,7 @@ public class CommandHandler {
       return;
     }
     // TODO: 25.06.19 Fix mention as prefix
-    var parsed = ParsedMessage.parse(new String[] {
+    final var parsed = ParsedMessage.parse(new String[] {
         DEFAULT_PREFIX, event.getJDA().getSelfUser().getAsMention()
     }, content);
     // Message just starts with prefix, no real command
@@ -81,16 +81,16 @@ public class CommandHandler {
     }
   }
 
-  private void callCommand(Command command, String[] args, Message message) {
+  private void callCommand(final Command command, final String[] args, final Message message) {
     if (args.length > 0) {
-      var matchingSubcommand = Arrays.stream(command.getSubcommands())
-                                     .filter(sub -> List.of(sub.getAliases())
-                                                        .contains(args[0]))
-                                     .findAny();
-      if (matchingSubcommand.isPresent()) {
-        var newArgs = new String[args.length - 1];
+      final var subcommand = Arrays.stream(command.getSubcommands())
+                                   .filter(sub -> List.of(sub.getAliases())
+                                                      .contains(args[0]))
+                                   .findAny();
+      if (subcommand.isPresent()) {
+        final var newArgs = new String[args.length - 1];
         System.arraycopy(args, 1, newArgs, 0, args.length - 1);
-        callCommand(matchingSubcommand.get(), newArgs, message);
+        callCommand(subcommand.get(), newArgs, message);
         return;
       }
     }
@@ -127,11 +127,11 @@ public class CommandHandler {
     command.execute(new DefaultCommandContext(saveer, message, args));
   }
 
-  private Saveer getSaveer() {
+  public Saveer getSaveer() {
     return saveer;
   }
 
-  private CommandManager getCommandManager() {
+  public CommandManager getCommandManager() {
     return commandManager;
   }
 
@@ -141,35 +141,35 @@ public class CommandHandler {
     private final String command;
     private final String[] args;
 
-    ParsedMessage(String prefix, String command, String[] args) {
+    private ParsedMessage(final String prefix, final String command, final String... args) {
       this.prefix = prefix;
       this.command = command;
-      this.args = args;
+      this.args = args.clone();
     }
 
-    static ParsedMessage parse(String[] prefixes, String message) {
-      var splitted = message.split("\\s+");
-      AtomicReference<String> prefix = new AtomicReference<>();
+    private static ParsedMessage parse(final String[] prefixes, final String message) {
+      final var splitted = message.split("\\s+");
+      final AtomicReference<String> prefix = new AtomicReference<>();
       List.of(prefixes).forEach(s -> {
         if (message.startsWith(s)) {
           prefix.set(s);
         }
       });
-      var command = splitted[0].substring(prefix.get().length());
-      var args = new String[splitted.length - 1];
+      final var command = splitted[0].substring(prefix.get().length());
+      final var args = new String[splitted.length - 1];
       System.arraycopy(splitted, 1, args, 0, splitted.length - 1);
       return new ParsedMessage(prefix.get(), command, args);
     }
 
-    String getPrefix() {
+    private String getPrefix() {
       return prefix;
     }
 
-    String getCommand() {
+    private String getCommand() {
       return command;
     }
 
-    String[] getArgs() {
+    private String[] getArgs() {
       return args;
     }
   }

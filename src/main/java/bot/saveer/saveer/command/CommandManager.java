@@ -19,9 +19,9 @@
 package bot.saveer.saveer.command;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
  */
 public class CommandManager {
 
-  private final Logger log = LoggerFactory.getLogger(getClass());
+  private static final Logger LOG = LoggerFactory.getLogger(CommandManager.class);
   private final List<Command> uniqueCommands = new ArrayList<>();
-  private final Map<String, Command> aliasCommands = new HashMap<>();
+  private final Map<String, Command> aliasCommands = new ConcurrentHashMap<>();
 
   /**
    * Registers the commands.
@@ -56,14 +56,14 @@ public class CommandManager {
   public CommandManager register(Command command) {
     List.of(command.getAliases()).forEach(alias -> {
       if (aliasCommands.containsKey(alias)) {
-        log.warn(
+        LOG.warn(
             "Alias `{}` is already registered by `{}`.",
             alias,
             aliasCommands.get(alias).getClass().getName()
         );
       } else {
         this.aliasCommands.put(alias, command);
-        log.debug("Registered alias `{}` of command `{}`.", alias, command.getClass().getName());
+        LOG.debug("Registered alias `{}` of command `{}`.", alias, command.getClass().getName());
       }
     });
     return this;

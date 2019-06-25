@@ -29,11 +29,12 @@ public class DefaultCommandContext implements CommandContext {
 
   /**
    * Default implementation for {@link CommandContext}.
+   *
    * @param saveer The {@link Saveer} instance.
    * @param message The {@link Message}.
    * @param args The command args.
    */
-  public DefaultCommandContext(Saveer saveer, Message message, String[] args) {
+  public DefaultCommandContext(Saveer saveer, Message message, String... args) {
     this.saveer = saveer;
     this.message = message;
     this.args = args.clone();

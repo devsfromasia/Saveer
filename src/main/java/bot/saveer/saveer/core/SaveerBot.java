@@ -27,9 +27,9 @@ import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
 /**
- * The Bot implements {@link Saveer} and is the main class of this application.
+ * The SaveerBot implements {@link Saveer} and is the main class of this application.
  */
-public class Bot implements Saveer {
+public class SaveerBot implements Saveer {
 
   private final Config config;
   private final CommandManager commandManager;
@@ -37,9 +37,10 @@ public class Bot implements Saveer {
 
   /**
    * Creates a new bot.
+   *
    * @param config The {@link Config}.
    */
-  public Bot(Config config) {
+  public SaveerBot(final Config config) {
     this.config = config;
     this.commandManager = new CommandManager();
     new CommandRegistry(commandManager);
@@ -52,7 +53,7 @@ public class Bot implements Saveer {
    * @throws LoginException See {@link DefaultShardManagerBuilder#build()}
    */
   public void start() throws LoginException {
-    var builder = new DefaultShardManagerBuilder();
+    final var builder = new DefaultShardManagerBuilder();
     builder.setToken(config.getToken());
     builder.setEventManager(new AnnotatedEventManager());
 
@@ -73,9 +74,9 @@ public class Bot implements Saveer {
     return this.shardManager;
   }
 
-  private void setShardManager(ShardManager shardManager) {
+  private void setShardManager(final ShardManager shardManager) {
     if (getShardManager() != null) {
-      throw new RuntimeException("ShardManager is already set.");
+      throw new IllegalStateException("ShardManager is already set.");
     }
     this.shardManager = shardManager;
   }

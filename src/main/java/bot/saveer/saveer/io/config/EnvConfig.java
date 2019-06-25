@@ -30,7 +30,7 @@ public class EnvConfig implements Config {
    * Creates a new {@link EnvConfig}.
    */
   public EnvConfig() {
-    var dotenv = Dotenv.load();
+    final var dotenv = Dotenv.load();
     this.token = dotenv.get("SAVEER_TOKEN");
     this.owners = Optional.ofNullable(dotenv.get("SAVEER_OWNERS")).orElse("").split(";");
   }

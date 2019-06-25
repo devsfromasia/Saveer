@@ -20,36 +20,46 @@ package bot.saveer.saveer.core;
 
 import bot.saveer.saveer.command.CommandManager;
 import bot.saveer.saveer.command.category.CommandCategoryBuilder;
+import bot.saveer.saveer.commands.Test2Command;
 import bot.saveer.saveer.commands.TestCommand;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The CommandRegistry is used to register all commands.
  */
 public class CommandRegistry {
 
-  private final Logger log = LoggerFactory.getLogger(getClass());
   private final CommandManager commandManager;
 
   /**
    * Creates a new {@link CommandRegistry}.
+   *
    * @param commandManager The {@link CommandManager}.
    */
-  public CommandRegistry(CommandManager commandManager) {
+  public CommandRegistry(final CommandManager commandManager) {
     this.commandManager = commandManager;
-    log.debug("Registering commands...");
     registerCommands();
-    log.debug("All commands registered.");
   }
 
   private void registerCommands() {
     // Create categories
-    var ownerCategory = new CommandCategoryBuilder("Owner")
+    final var ownerCategory = new CommandCategoryBuilder("Owner")
+        .setOwnerRestricted(true)
+        .build();
+    final var generalCategory = new CommandCategoryBuilder("General")
         .setOwnerRestricted(true)
         .build();
 
     // Register actual commands
-    commandManager.register(new TestCommand().setCommandCategory(ownerCategory));
+    final var testCommand = new TestCommand();
+    testCommand.setCommandCategory(ownerCategory);
+    commandManager.register(testCommand);
+
+    final var test2Command = new Test2Command();
+    test2Command.setCommandCategory(generalCategory);
+    commandManager.register(test2Command);
+  }
+
+  public CommandManager getCommandManager() {
+    return commandManager;
   }
 }

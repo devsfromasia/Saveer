@@ -21,27 +21,14 @@ package bot.saveer.saveer.commands;
 import bot.saveer.saveer.command.AbstractCommand;
 import bot.saveer.saveer.command.ctx.CommandContext;
 
-public class TestCommand extends AbstractCommand {
+public class Test2Command extends AbstractCommand {
 
-  public TestCommand() {
-    super("Test", "test");
-    addSubcommand(new TestSubCommand());
+  public Test2Command() {
+    super("Test2", "test2");
   }
 
   @Override
   public void execute(final CommandContext ctx) {
-    ctx.getTextChannel().sendMessage("test reply").queue();
-  }
-
-  static class TestSubCommand extends AbstractCommand {
-
-    public TestSubCommand() {
-      super("Subcommand", "subcommand");
-    }
-
-    @Override
-    public void execute(final CommandContext ctx) {
-      ctx.getTextChannel().sendMessage("this is a subcommand").queue();
-    }
+    ctx.getTextChannel().sendMessage("test2 reply").queue();
   }
 }

@@ -90,11 +90,6 @@ public interface Command {
   boolean isOwnerRestricted();
 
   /**
-   * Called before command execution.
-   */
-  void beforeExecute();
-
-  /**
    * Executes this command.
    *
    * @param ctx The command context.
