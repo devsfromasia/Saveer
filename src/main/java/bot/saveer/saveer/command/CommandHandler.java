@@ -106,7 +106,10 @@ public class CommandHandler {
       // TODO: 25.06.19 Send no permission message (if possible)
       return;
     }
-    if (command.isOwnerRestricted() && !List.of(saveer.getConfig().getOwners()).contains(message.getAuthor().getId())) {
+    if (
+        command.isOwnerRestricted()
+            && !List.of(saveer.getConfig().getOwners()).contains(message.getAuthor().getId())
+    ) {
       // TODO: 25.06.19 Send no permission message
       return;
     }
