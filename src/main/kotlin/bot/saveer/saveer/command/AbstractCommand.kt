@@ -16,24 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer
+package bot.saveer.saveer.command
 
-import bot.saveer.saveer.core.SaveerBot
-import bot.saveer.saveer.io.config.EnvConfig
-import org.slf4j.LoggerFactory
+import bot.saveer.saveer.command.internal.CommandPermissionsImpl
 
-private val LOG = LoggerFactory.getLogger("Launcher")
+abstract class AbstractCommand @JvmOverloads protected constructor(
+    override val displayName: String,
+    override val aliases: List<String>,
+    override val usage: String = "",
+    override val description: String,
+    override val category: CommandCategory,
+    override val permissions: CommandPermissions = CommandPermissionsImpl()
+) : Command {
 
-/**
- * Saveer entry point.
- */
-fun main() {
-    LOG.debug("Loading config...")
-    val config = EnvConfig()
-    LOG.debug("Config loaded.")
+    override val subcommands = mutableListOf<Command>()
 
-    LOG.debug("Initialising saveer...")
-    val saveer = SaveerBot(config)
-    LOG.info("Starting saveer...")
-    saveer.start()
+    fun registerSubCommand(command: Command) {
+        TODO("REGISTER COMMAND")
+    }
+
+    override fun beforeExecute() = Unit
+
+    override fun afterExecute() = Unit
 }

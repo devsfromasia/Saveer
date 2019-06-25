@@ -19,17 +19,24 @@
 package bot.saveer.saveer.command
 
 import bot.saveer.saveer.core.Saveer
+import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
 
+@Suppress("unused")
 interface CommandContext {
 
     val saveer: Saveer
 
-    val args: List<String>
+    val args: CommandArguments
 
     val message: Message
 
+    val guild: Guild
+        get() = message.guild
+
     val textChannel: TextChannel
         get() = message.textChannel
+
+
 }
