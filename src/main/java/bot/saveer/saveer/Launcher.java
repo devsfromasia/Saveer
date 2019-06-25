@@ -18,7 +18,7 @@
 
 package bot.saveer.saveer;
 
-import bot.saveer.saveer.core.Bot;
+import bot.saveer.saveer.core.SaveerBot;
 import bot.saveer.saveer.io.config.EnvConfig;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
@@ -28,9 +28,12 @@ import org.slf4j.LoggerFactory;
 /**
  * The main entry of the bot.
  */
-public class Launcher {
+public final class Launcher {
 
-  private static final Logger log = LoggerFactory.getLogger(Launcher.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Launcher.class);
+
+  private Launcher() {
+  }
 
   /**
    * The program entry method.
@@ -41,14 +44,14 @@ public class Launcher {
    * @param args The passed program arguments.
    * @throws LoginException See {@link DefaultShardManagerBuilder#build()}
    */
-  public static void main(String[] args) throws LoginException {
-    log.debug("Loading config...");
-    var config = new EnvConfig();
-    log.debug("Config loaded.");
+  public static void main(final String[] args) throws LoginException {
+    LOG.debug("Loading config...");
+    final var config = new EnvConfig();
+    LOG.debug("Config loaded.");
 
-    log.debug("Initialising saveer...");
-    var saveer = new Bot(config);
-    log.info("Starting saveer...");
+    LOG.debug("Initialising saveer...");
+    final var saveer = new SaveerBot(config);
+    LOG.info("Starting saveer...");
     saveer.start();
   }
 }

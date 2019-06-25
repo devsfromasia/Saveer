@@ -28,7 +28,7 @@ public class CommandCategoryBuilder {
   private final String name;
   private final List<Permission> userPermissions = new ArrayList<>();
   private String description = "No description provided";
-  private boolean ownerRestricted = false;
+  private boolean ownerRestricted;
 
   public CommandCategoryBuilder(String name) {
     this.name = Objects.requireNonNull(name);

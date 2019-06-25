@@ -16,17 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer.io.config;
+package bot.saveer.saveer.commands;
 
-public interface Config {
+import bot.saveer.saveer.command.AbstractCommand;
+import bot.saveer.saveer.command.ctx.CommandContext;
 
-  /**
-   * The Discord application token of the bot.
-   * <br>If no token has been set, this returns null.
-   *
-   * @return The bot token.
-   */
-  String getToken();
+public class Test2Command extends AbstractCommand {
 
-  String[] getOwners();
+  public Test2Command() {
+    super("Test2", "test2");
+  }
+
+  @Override
+  public void execute(final CommandContext ctx) {
+    ctx.getTextChannel().sendMessage("test2 reply").queue();
+  }
 }

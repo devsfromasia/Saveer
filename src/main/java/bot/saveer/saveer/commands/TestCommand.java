@@ -24,23 +24,23 @@ import bot.saveer.saveer.command.ctx.CommandContext;
 public class TestCommand extends AbstractCommand {
 
   public TestCommand() {
-    super("Test", new String[] {"test"});
+    super("Test", "test");
     addSubcommand(new TestSubCommand());
   }
 
   @Override
-  public void execute(CommandContext ctx) {
+  public void execute(final CommandContext ctx) {
     ctx.getTextChannel().sendMessage("test reply").queue();
   }
 
-  class TestSubCommand extends AbstractCommand {
+  static class TestSubCommand extends AbstractCommand {
 
     public TestSubCommand() {
-      super("Subcommand", new String[] {"subcommand"});
+      super("Subcommand", "subcommand");
     }
 
     @Override
-    public void execute(CommandContext ctx) {
+    public void execute(final CommandContext ctx) {
       ctx.getTextChannel().sendMessage("this is a subcommand").queue();
     }
   }
