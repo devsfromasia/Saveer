@@ -24,9 +24,6 @@ import org.slf4j.LoggerFactory
 
 private val LOG = LoggerFactory.getLogger("Launcher")
 
-/**
- * Saveer entry point.
- */
 fun main() {
     LOG.debug("Loading config...")
     val config = EnvConfig()

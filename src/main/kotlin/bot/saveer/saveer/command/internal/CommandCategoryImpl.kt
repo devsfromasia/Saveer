@@ -24,5 +24,5 @@ import bot.saveer.saveer.command.CommandPermissions
 internal class CommandCategoryImpl @JvmOverloads constructor(
         override val name: String,
         override val description: String = "No description provided.",
-        override val permissions: CommandPermissions
+        override val permissions: CommandPermissions = CommandPermissionsImpl()
 ) : CommandCategory

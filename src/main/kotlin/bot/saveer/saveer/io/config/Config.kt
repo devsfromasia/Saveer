@@ -16,36 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer.core;
+package bot.saveer.saveer.io.config
 
-import bot.saveer.saveer.io.config.Config;
-import net.dv8tion.jda.api.sharding.ShardManager;
+interface Config {
 
-public interface Saveer {
+    val token: String
 
-  /**
-   * The configuration storage for this application.
-   *
-   * @return The config.
-   */
-  Config getConfig();
+    val prefix: String
 
-  /**
-   * The {@link ShardManager} that manages all Discord shards.
-   *
-   * @return The {@link ShardManager}.
-   */
-  ShardManager getShardManager();
-
-  /**
-   * The {@link CommandManager} that handles all command registrations.
-   *
-   * @return The {@link CommandManager}.
-   */
-  CommandManager getCommandManager();
-
-  /**
-   * Initializes the shutdown of the bot and closes all connections.
-   */
-  void shutdown();
+    val owners: List<String>
 }

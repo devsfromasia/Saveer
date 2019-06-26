@@ -16,8 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Configuration related files.
- */
+package bot.saveer.saveer.core
 
-package bot.saveer.saveer.io.config;
+import bot.saveer.saveer.command.CommandManager
+import bot.saveer.saveer.io.config.Config
+import net.dv8tion.jda.api.sharding.ShardManager
+
+interface Saveer {
+
+    val config: Config
+
+    val shardManager: ShardManager
+
+    val commandManger: CommandManager
+
+    fun shutdown()
+}

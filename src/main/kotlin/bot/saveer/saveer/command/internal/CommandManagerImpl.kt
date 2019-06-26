@@ -29,7 +29,7 @@ internal class CommandManagerImpl : CommandManager {
     override val aliasCommands = mutableMapOf<String, Command>()
 
     override fun register(vararg commands: Command) {
-
+        commands.forEach(this::register)
     }
 
     private fun register(command: Command) {

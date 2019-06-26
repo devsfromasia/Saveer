@@ -16,19 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer.io.config;
+package bot.saveer.saveer.io.config
 
-public interface Config {
+import io.github.cdimascio.dotenv.Dotenv
+import java.util.*
 
-  /**
-   * The Discord application token of the bot.
-   * <br>If no token has been set, this returns null.
-   *
-   * @return The bot token.
-   */
-  String getToken();
+class EnvConfig : Config {
 
-  String getPrefix();
+    override val token: String
+    override val prefix: String
+    override val owners: List<String>
 
-  String[] getOwners();
+    init {
+        val dotenv = Dotenv.load()
+        token = Optional.ofNullable(dotenv["SAVEER_TOKEN"]).orElse("xxx")
+        prefix = Optional.ofNullable(dotenv["SAVEER_PREFIX"]).orElse("s!")
+        owners = Optional.ofNullable(dotenv["SAVEER_OWNERS"]).orElse("").split(";")
+    }
 }

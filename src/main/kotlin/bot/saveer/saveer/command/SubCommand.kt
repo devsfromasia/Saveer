@@ -18,11 +18,13 @@
 
 package bot.saveer.saveer.command
 
+import bot.saveer.saveer.command.internal.CommandPermissionsImpl
+
 abstract class SubCommand @JvmOverloads protected constructor(
     val parent: Command,
     displayName: String,
     aliases: List<String>,
-    usage: String,
-    description: String = "",
-    permissions: CommandPermissions
+    usage: String = "",
+    description: String = "No description provided.",
+    permissions: CommandPermissions = CommandPermissionsImpl()
 ) : AbstractCommand(displayName, aliases, usage, description, parent.category, permissions)

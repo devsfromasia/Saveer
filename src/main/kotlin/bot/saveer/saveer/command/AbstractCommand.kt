@@ -24,7 +24,7 @@ abstract class AbstractCommand @JvmOverloads protected constructor(
     override val displayName: String,
     override val aliases: List<String>,
     override val usage: String = "",
-    override val description: String,
+    override val description: String = "No description provided.",
     override val category: CommandCategory,
     override val permissions: CommandPermissions = CommandPermissionsImpl()
 ) : Command {
@@ -32,7 +32,11 @@ abstract class AbstractCommand @JvmOverloads protected constructor(
     override val subcommands = mutableListOf<Command>()
 
     fun registerSubCommand(command: Command) {
-        TODO("REGISTER COMMAND")
+        if (!subcommands.contains(command)) {
+            subcommands.add(command)
+        } else {
+            // TODO: Print warning
+        }
     }
 
     override fun beforeExecute() = Unit

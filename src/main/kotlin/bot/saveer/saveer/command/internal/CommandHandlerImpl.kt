@@ -31,7 +31,7 @@ internal class CommandHandlerImpl(
         override val commandManager: CommandManager
 ) : CommandHandler {
 
-    val defaultPrefix = saveer.config.prefix
+    private val defaultPrefix = saveer.config.prefix
 
     @SubscribeEvent
     override fun handleMessage(event: MessageReceivedEvent) {
@@ -39,24 +39,25 @@ internal class CommandHandlerImpl(
             return
 
         val content = event.message.contentRaw
-        if (!content.startsWith(defaultPrefix) || !content.startsWith(event.jda.selfUser.asMention))
+        if (!content.startsWith(defaultPrefix) && !content.startsWith(event.jda.selfUser.asMention))
             return
 
-        val splitted = content.split("\\s+")
+        val splitted = content.split(" ")
         val prefix = if (content.startsWith(defaultPrefix)) defaultPrefix else event.jda.selfUser.asMention
         val command = splitted[0].substring(prefix.length)
-        val args = splitted.subList(1, splitted.size - 1)
+        val args = if (splitted.size > 1) splitted.subList(1, splitted.size) else emptyList()
 
         if (!commandManager.aliasCommands.containsKey(command))
             return
 
+        callCommand(commandManager.aliasCommands[command] ?: error("Command does not exist"), args, event.message)
     }
 
     private fun callCommand(command: Command, args: List<String>, message: Message) {
         if (args.isNotEmpty()) {
             val subcommand = command.subcommands.firstOrNull { cmd -> cmd.aliases.contains(args[0]) }
             if (subcommand != null) {
-                val newArgs = args.subList(1, args.size - 1)
+                val newArgs = if(args.size > 1) args.subList(1, args.size - 1) else emptyList()
                 callCommand(subcommand, newArgs, message)
                 return
             }
@@ -76,6 +77,6 @@ internal class CommandHandlerImpl(
             // TODO: Send not enough permissions message
             return
         }
-        command.execute(CommandContextImpl(saveer, args, message))
+        command.execute(CommandContextImpl(saveer, CommandArgumentsImpl(args), message))
     }
 }

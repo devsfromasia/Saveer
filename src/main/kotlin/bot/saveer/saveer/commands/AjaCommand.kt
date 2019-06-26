@@ -16,31 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer.commands;
+package bot.saveer.saveer.commands
 
-import bot.saveer.saveer.command.AbstractCommand;
+import bot.saveer.saveer.command.AbstractCommand
+import bot.saveer.saveer.command.Command
+import bot.saveer.saveer.command.CommandContext
+import bot.saveer.saveer.command.SubCommand
+import bot.saveer.saveer.command.internal.CommandCategoryImpl
 
-public class TestCommand extends AbstractCommand {
+class AjaCommand : AbstractCommand("Aja", listOf("aja"), category = CommandCategoryImpl("ja", "nein")) {
 
-  public TestCommand() {
-    super("Test", "test");
-    addSubcommand(new TestSubCommand());
-  }
-
-  @Override
-  public void execute(final CommandContext ctx) {
-    ctx.getTextChannel().sendMessage("test reply").queue();
-  }
-
-  static class TestSubCommand extends AbstractCommand {
-
-    public TestSubCommand() {
-      super("Subcommand", "subcommand");
+    init {
+        registerSubCommand(AjaSubCommand(this))
     }
 
-    @Override
-    public void execute(final CommandContext ctx) {
-      ctx.getTextChannel().sendMessage("this is a subcommand").queue();
+    override fun execute(ctx: CommandContext) {
+        ctx.textChannel.sendMessage("hiiiiii").queue()
     }
-  }
+}
+
+class AjaSubCommand(parent: Command) : SubCommand(parent, "Subcmd", listOf("subcmd")) {
+    override fun execute(ctx: CommandContext) {
+        ctx.textChannel.sendMessage("sub").queue()
+    }
+
 }
