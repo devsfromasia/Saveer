@@ -13,7 +13,4 @@ cache:
     - $HOME/.gradle/wrapper/
 
 script:
-  - ./gradlew checkstyleMain
-  - ./gradlew pmdMain
-  - ./gradlew spotbugsMain
   - ./gradlew clean build
