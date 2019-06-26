@@ -25,7 +25,7 @@ import bot.saveer.saveer.command.internal.CommandHandlerImpl
 import bot.saveer.saveer.command.internal.CommandManagerImpl
 import bot.saveer.saveer.commands.vsc.SaveCommand
 import bot.saveer.saveer.io.config.Config
-import bot.saveer.saveer.io.db.Database
+import bot.saveer.saveer.io.db.MongoDataSource
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.api.sharding.ShardManager
@@ -34,7 +34,7 @@ class SaveerBot(
         override val config: Config
 ) : Saveer {
 
-    override lateinit var database: Database
+    override lateinit var database: MongoDataSource
     override val commandManger: CommandManager
     override lateinit var shardManager: ShardManager
     private val commandHandler: CommandHandler
@@ -49,10 +49,10 @@ class SaveerBot(
     }
 
     fun start() {
-        database = Database(this)
+        database = MongoDataSource(this)
 
         val builder = DefaultShardManagerBuilder(config.token)
-        builder.setEventManager(AnnotatedEventManager())
+        builder.setEventManagerProvider { AnnotatedEventManager() }
 
         builder.addEventListeners(commandHandler)
 
