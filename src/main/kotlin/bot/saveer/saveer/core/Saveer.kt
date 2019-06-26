@@ -20,7 +20,7 @@ package bot.saveer.saveer.core
 
 import bot.saveer.saveer.command.CommandManager
 import bot.saveer.saveer.io.config.Config
-import bot.saveer.saveer.io.db.Database
+import bot.saveer.saveer.io.db.MongoDataSource
 import net.dv8tion.jda.api.sharding.ShardManager
 
 interface Saveer {
@@ -31,7 +31,7 @@ interface Saveer {
 
     val commandManger: CommandManager
 
-    val database: Database
+    val database: MongoDataSource
 
     fun shutdown()
 }

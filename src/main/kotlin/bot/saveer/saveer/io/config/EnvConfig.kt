@@ -25,11 +25,11 @@ class EnvConfig : Config {
     override val token: String
     override val prefix: String
     override val owners: List<String>
-    override val dbHost: String
-    override val dbPort: Int
+    override val dbHosts: List<String>
     override val dbName: String
     override val dbUser: String
     override val dbPassword: String
+    override val dbAuthenticationDatabase: String
 
     init {
         val dotenv = Dotenv.load()
@@ -37,11 +37,11 @@ class EnvConfig : Config {
         prefix = dotenv["SAVEER_PREFIX"] ?: "s!"
         owners = (dotenv["SAVEER_OWNERS"] ?: "").split(";")
 
-        // Database
-        dbHost = dotenv["SAVEER_DB_HOST"] ?: "localhost"
-        dbPort = (dotenv["SAVEER_DB_PORT"] ?: "27017").toInt()
+        // MongoDataSource
+        dbHosts = dotenv["SAVEER_DB_HOSTS"]?.split(";") ?: listOf("localhost")
         dbName = dotenv["SAVEER_DB_NAME"] ?: "saveer"
         dbUser = dotenv["SAVEER_DB_USER"] ?: "myUser"
         dbPassword = dotenv["SAVEER_DB_PASSWORD"] ?: "myPassword"
+        dbAuthenticationDatabase = dotenv["SAVEER_DB_AUTH_DATABASE"] ?: "admin"
     }
 }

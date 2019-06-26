@@ -26,13 +26,13 @@ interface Config {
 
     val owners: List<String>
 
-    val dbHost: String
-
-    val dbPort: Int
+    val dbHosts: List<String>
 
     val dbName: String
 
     val dbUser: String
 
     val dbPassword: String
+
+    val dbAuthenticationDatabase: String
 }
