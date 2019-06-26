@@ -16,14 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import com.github.spotbugs.SpotBugsTask
-import com.github.spotbugs.SpotBugsXmlReport
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.github.spotbugs") version "2.0.0"
-    checkstyle
-    pmd
     application
     java
     kotlin("jvm") version "1.3.40"
@@ -42,6 +37,7 @@ dependencies {
     }
     compile("io.github.cdimascio", "java-dotenv", "5.1.0")
     compile("ch.qos.logback", "logback-classic", "1.3.0-alpha4")
+    compile("dev.morphia.morphia", "core", "1.5.3")
     implementation(kotlin("stdlib-jdk8"))
     testImplementation("org.junit.jupiter", "junit-jupiter", "5.4.2")
 }
@@ -55,22 +51,9 @@ configure<JavaPluginConvention> {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-pmd {
-    ruleSets = listOf("$rootProject.projectDir/config/pmd/ruleset.xml")
-}
-
 tasks {
     "jar"(Jar::class) {
         archiveClassifier += "original"
-    }
-    "spotbugsMain"(SpotBugsTask::class) {
-        reports {
-            xml.enabled = false
-            html.enabled = true
-        }
-    }
-    "checkstyleMain"(Checkstyle::class) {
-        configFile = project.file("config/checkstyle/google_checks.xml")
     }
 }
 
@@ -84,23 +67,5 @@ val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
     jvmTarget = "11"
 }
-
-/**
- * @see SingleFileReport.enabled
- */
-var SingleFileReport.enabled: Boolean
-    get() = this.isEnabled
-    set(value) {
-        this.isEnabled = value
-    }
-
-/**
- * @see SpotBugsXmlReport.enabled
- */
-var SpotBugsXmlReport.enabled: Boolean
-    get() = this.isEnabled
-    set(value) {
-        this.isEnabled = value
-    }
 
 operator fun <T> Property<T>.plusAssign(value: T) = this.set(value)

@@ -20,10 +20,12 @@ package bot.saveer.saveer.core
 
 import bot.saveer.saveer.command.CommandHandler
 import bot.saveer.saveer.command.CommandManager
+import bot.saveer.saveer.command.internal.CommandCategoryImpl
 import bot.saveer.saveer.command.internal.CommandHandlerImpl
 import bot.saveer.saveer.command.internal.CommandManagerImpl
-import bot.saveer.saveer.commands.AjaCommand
+import bot.saveer.saveer.commands.vsc.SaveCommand
 import bot.saveer.saveer.io.config.Config
+import bot.saveer.saveer.io.db.Database
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder
 import net.dv8tion.jda.api.sharding.ShardManager
@@ -32,17 +34,23 @@ class SaveerBot(
         override val config: Config
 ) : Saveer {
 
+    override lateinit var database: Database
     override val commandManger: CommandManager
     override lateinit var shardManager: ShardManager
     private val commandHandler: CommandHandler
 
     init {
         commandManger = CommandManagerImpl()
-        commandManger.register(AjaCommand())
+
+        val vscCategory = CommandCategoryImpl("Version Control System", "Manage your server updates and roll back if you have done an ooopsie.")
+
+        commandManger.register(SaveCommand(vscCategory))
         commandHandler = CommandHandlerImpl(this, commandManger)
     }
 
     fun start() {
+        database = Database(this)
+
         val builder = DefaultShardManagerBuilder(config.token)
         builder.setEventManager(AnnotatedEventManager())
 

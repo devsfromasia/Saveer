@@ -42,7 +42,7 @@ internal class CommandHandlerImpl(
         if (!content.startsWith(defaultPrefix) && !content.startsWith(event.jda.selfUser.asMention))
             return
 
-        val splitted = content.split(" ")
+        val splitted = content.split("\\s+".toRegex())
         val prefix = if (content.startsWith(defaultPrefix)) defaultPrefix else event.jda.selfUser.asMention
         val command = splitted[0].substring(prefix.length)
         val args = if (splitted.size > 1) splitted.subList(1, splitted.size) else emptyList()
@@ -50,15 +50,15 @@ internal class CommandHandlerImpl(
         if (!commandManager.aliasCommands.containsKey(command))
             return
 
-        callCommand(commandManager.aliasCommands[command] ?: error("Command does not exist"), args, event.message)
+        callCommand(commandManager.aliasCommands[command] ?: error("Command does not exist"), command, prefix, args, event.message)
     }
 
-    private fun callCommand(command: Command, args: List<String>, message: Message) {
+    private fun callCommand(command: Command, invoke: String, prefix: String, args: List<String>, message: Message) {
         if (args.isNotEmpty()) {
             val subcommand = command.subcommands.firstOrNull { cmd -> cmd.aliases.contains(args[0]) }
             if (subcommand != null) {
                 val newArgs = if(args.size > 1) args.subList(1, args.size - 1) else emptyList()
-                callCommand(subcommand, newArgs, message)
+                callCommand(subcommand, prefix, args[0], newArgs, message)
                 return
             }
         }
@@ -77,6 +77,6 @@ internal class CommandHandlerImpl(
             // TODO: Send not enough permissions message
             return
         }
-        command.execute(CommandContextImpl(saveer, CommandArgumentsImpl(args), message))
+        command.execute(CommandContextImpl(saveer, invoke, prefix, CommandArgumentsImpl(args), message))
     }
 }

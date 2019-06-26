@@ -19,18 +19,29 @@
 package bot.saveer.saveer.io.config
 
 import io.github.cdimascio.dotenv.Dotenv
-import java.util.*
 
 class EnvConfig : Config {
 
     override val token: String
     override val prefix: String
     override val owners: List<String>
+    override val dbHost: String
+    override val dbPort: Int
+    override val dbName: String
+    override val dbUser: String
+    override val dbPassword: String
 
     init {
         val dotenv = Dotenv.load()
-        token = Optional.ofNullable(dotenv["SAVEER_TOKEN"]).orElse("xxx")
-        prefix = Optional.ofNullable(dotenv["SAVEER_PREFIX"]).orElse("s!")
-        owners = Optional.ofNullable(dotenv["SAVEER_OWNERS"]).orElse("").split(";")
+        token = dotenv["SAVEER_TOKEN"] ?: "xxx"
+        prefix = dotenv["SAVEER_PREFIX"] ?: "s!"
+        owners = (dotenv["SAVEER_OWNERS"] ?: "").split(";")
+
+        // Database
+        dbHost = dotenv["SAVEER_DB_HOST"] ?: "localhost"
+        dbPort = (dotenv["SAVEER_DB_PORT"] ?: "27017").toInt()
+        dbName = dotenv["SAVEER_DB_NAME"] ?: "saveer"
+        dbUser = dotenv["SAVEER_DB_USER"] ?: "myUser"
+        dbPassword = dotenv["SAVEER_DB_PASSWORD"] ?: "myPassword"
     }
 }

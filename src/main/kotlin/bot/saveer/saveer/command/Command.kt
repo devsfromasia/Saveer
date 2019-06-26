@@ -55,4 +55,8 @@ interface Command {
     fun execute(ctx: CommandContext)
 
     fun afterExecute()
+
+    fun getUsageString(ctx: CommandContext): String {
+        return ctx.prefix + ctx.usedInvoke + " " + usage
+    }
 }

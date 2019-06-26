@@ -21,7 +21,7 @@ package bot.saveer.saveer.command.internal
 import bot.saveer.saveer.command.CommandPermissions
 import net.dv8tion.jda.api.Permission
 
-internal class CommandPermissionsImpl @JvmOverloads constructor(
+class CommandPermissionsImpl @JvmOverloads constructor(
         override val userPermissions: List<Permission> = emptyList(),
         override val botPermissions: List<Permission> = listOf(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE),
         override val ownerRestricted: Boolean = false

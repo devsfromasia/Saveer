@@ -18,6 +18,7 @@
 
 package bot.saveer.saveer.command
 
+import bot.saveer.saveer.command.internal.CommandPermissionsImpl
 import net.dv8tion.jda.api.Permission
 
 interface CommandPermissions {
@@ -27,4 +28,8 @@ interface CommandPermissions {
     val botPermissions: List<Permission>
 
     val ownerRestricted: Boolean
+
+    companion object {
+        val GUILD_ADMIN = CommandPermissionsImpl(listOf(Permission.ADMINISTRATOR), listOf(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE), false)
+    }
 }

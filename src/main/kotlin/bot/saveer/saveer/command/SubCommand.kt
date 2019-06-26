@@ -27,4 +27,11 @@ abstract class SubCommand @JvmOverloads protected constructor(
     usage: String = "",
     description: String = "No description provided.",
     permissions: CommandPermissions = CommandPermissionsImpl()
-) : AbstractCommand(displayName, aliases, usage, description, parent.category, permissions)
+) : AbstractCommand(displayName, aliases, usage, description, parent.category, permissions) {
+
+    override fun getUsageString(ctx: CommandContext): String {
+        return ctx.prefix + "//todo" //TODO: usage string for subcommands
+    }
+}
+
+// s!save me ok

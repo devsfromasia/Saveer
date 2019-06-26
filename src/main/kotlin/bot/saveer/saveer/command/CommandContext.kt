@@ -19,14 +19,22 @@
 package bot.saveer.saveer.command
 
 import bot.saveer.saveer.core.Saveer
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.MessageBuilder
+import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
+import java.awt.Color
 
 @Suppress("unused")
 interface CommandContext {
 
     val saveer: Saveer
+
+    val usedInvoke: String
+
+    val prefix: String
 
     val args: CommandArguments
 
@@ -38,5 +46,21 @@ interface CommandContext {
     val textChannel: TextChannel
         get() = message.textChannel
 
+    fun sendError(title: String, message: String) {
+        val embed = EmbedBuilder()
+                .setTitle(title)
+                .setDescription(message)
+                .setColor(Color(226, 54, 54))
+                .build()
+        sendSafe(MessageBuilder().setEmbed(embed).build())
+    }
 
+    fun sendSafe(message: Message) {
+        if (hasSendPermissions())
+            textChannel.sendMessage(message).queue()
+    }
+
+    private fun hasSendPermissions(): Boolean {
+        return guild.selfMember.hasPermission(textChannel, Permission.MESSAGE_READ, Permission.MESSAGE_WRITE)
+    }
 }

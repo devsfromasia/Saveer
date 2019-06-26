@@ -25,6 +25,8 @@ import net.dv8tion.jda.api.entities.Message
 
 internal class CommandContextImpl(
         override val saveer: Saveer,
+        override val usedInvoke: String,
+        override val prefix: String,
         override val args: CommandArguments,
         override val message: Message
 ) : CommandContext

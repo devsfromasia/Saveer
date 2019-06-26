@@ -16,23 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bot.saveer.saveer.io.config
+package bot.saveer.saveer.io.db
 
-interface Config {
+import bot.saveer.saveer.core.Saveer
+import com.mongodb.MongoClient
+import com.mongodb.MongoClientURI
+import dev.morphia.Datastore
+import dev.morphia.Morphia
 
-    val token: String
+class Database(saveer: Saveer) {
 
-    val prefix: String
+    val morphia = Morphia()
+    val datastore: Datastore
 
-    val owners: List<String>
-
-    val dbHost: String
-
-    val dbPort: Int
-
-    val dbName: String
-
-    val dbUser: String
-
-    val dbPassword: String
+    init {
+        //TODO implement some working things here
+        morphia.mapPackage("bot.saveer.saveer.entities")
+        datastore = morphia.createDatastore(MongoClient(MongoClientURI(
+                "mongodb+srv://${saveer.config.dbUser}:${saveer.config.dbPassword}@${saveer.config.dbHost}/${saveer.config.dbName}?retryWrites=true&w=majority")), saveer.config.dbName)
+        datastore.ensureIndexes()
+    }
 }
