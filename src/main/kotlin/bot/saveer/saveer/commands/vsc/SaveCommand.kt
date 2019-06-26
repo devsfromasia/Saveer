@@ -22,7 +22,7 @@ import bot.saveer.saveer.command.AbstractCommand
 import bot.saveer.saveer.command.CommandCategory
 import bot.saveer.saveer.command.CommandContext
 import bot.saveer.saveer.command.CommandPermissions
-import net.dv8tion.jda.api.MessageBuilder
+import bot.saveer.saveer.entities.vsc.VSCCommit
 
 class SaveCommand(category: CommandCategory) : AbstractCommand(
         "Save",
@@ -39,10 +39,11 @@ class SaveCommand(category: CommandCategory) : AbstractCommand(
         }
 
         val tag = ctx.args[0]
-        var message = ""
+        var message = "No message provided."
         if (ctx.args.size > 1) {
             message = ctx.args.stringInRange(1, ctx.args.size, " ")
         }
-        ctx.sendSafe(MessageBuilder().setContent("Tag: $tag Message: $message").build())
+
+        val commit = VSCCommit(ctx.author, ctx.guild, tag, message)
     }
 }
