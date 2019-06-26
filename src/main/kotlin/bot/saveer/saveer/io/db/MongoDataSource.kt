@@ -29,7 +29,6 @@ import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
 import org.bson.codecs.configuration.CodecRegistry
 import org.bson.codecs.pojo.Convention
-import kotlin.reflect.KClass
 
 /**
  * Represents a MongoDB datasource
@@ -71,10 +70,11 @@ class MongoDataSource private constructor(
 
     val database: MongoDatabase = client.getDatabase(database)
 
+    @JvmOverloads
     fun <TDocument : Any> getCollection(
         database: MongoDatabase,
         codecRegistry: CodecRegistry = MongoClientSettings.getDefaultCodecRegistry(),
-        conventions: List<Convention>,
+        conventions: List<Convention>? = null,
         documentClass: Class<TDocument>
     ): Datastore<TDocument> {
         return DatastoreImpl(
