@@ -37,7 +37,7 @@ class DatastoreImpl<TDocument : Any>(
     database: MongoDatabase,
     _codecRegistry: CodecRegistry,
     pojoConventions: List<Convention>?,
-    documentClass: Class<TDocument>,
+    documentClass: Class<TDocument>
 ) : Datastore<TDocument> {
 
     private val internalCollection: MongoCollection<TDocument>
