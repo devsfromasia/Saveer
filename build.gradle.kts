@@ -38,6 +38,7 @@ dependencies {
     compile("io.github.cdimascio", "java-dotenv", "5.1.0")
     compile("ch.qos.logback", "logback-classic", "1.3.0-alpha4")
     compile("dev.morphia.morphia", "core", "1.5.3")
+    compile("org.mongodb", "mongodb-driver-sync", "3.10.2")
     implementation(kotlin("stdlib-jdk8"))
     testImplementation("org.junit.jupiter", "junit-jupiter", "5.4.2")
 }
