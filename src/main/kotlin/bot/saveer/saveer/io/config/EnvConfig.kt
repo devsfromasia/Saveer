@@ -38,7 +38,7 @@ class EnvConfig : Config {
         owners = (dotenv["SAVEER_OWNERS"] ?: "").split(";")
 
         // MongoDataSource
-        dbHosts = dotenv["SAVEER_DB_HOST"]?.split(";") ?: listOf("localhost")
+        dbHosts = dotenv["SAVEER_DB_HOSTS"]?.split(";") ?: listOf("localhost")
         dbName = dotenv["SAVEER_DB_NAME"] ?: "saveer"
         dbUser = dotenv["SAVEER_DB_USER"] ?: "myUser"
         dbPassword = dotenv["SAVEER_DB_PASSWORD"] ?: "myPassword"
